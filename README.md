@@ -5,5 +5,5 @@
 
 ## Requirements
 
-We recommend Conda with Python3. Use requirements.yml to create the necessary environment. 
+We recommend Conda with Python3. Use requirements.txt to create the necessary environment. 
 
