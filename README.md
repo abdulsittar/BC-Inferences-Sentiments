@@ -6,7 +6,16 @@
 ## Main Experiments
 
 ***Approach*** 
-[![](/assets/ChatAgri.PNG "ChatAgri")][ChatAgri]
+[![](/assets/Headline-Methodology.drawio.pdf "Headline-Methodology.drawio")][Headline-Methodology.drawio]
+
+***Meta data*** 
+[![](/assets/MetaDataBarriers.pdf "MetaDataBarriers")][MetaDataBarriers]
+
+***Common-sense Knowledge*** 
+[![](/assets/networkDiag.PNG "networkDiag")][networkDiag]
+
+***Results*** 
+[![](/assets/H-Algorithms.jpg "H-Algorithms")][H-Algorithm]
 
 ## Requirements
 
