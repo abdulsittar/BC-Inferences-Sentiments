@@ -6,7 +6,7 @@
 ## Main Experiments
 
 ***Approach*** 
-(/assets/Headline-Methodology.drawio-1.png "Headline-Methodology.drawio-1")
+[![](/assets/Headline-Methodology.drawio-1.png "Headline-Methodology.drawio-1")]
 
 ***Meta data*** 
 [![](/assets/MetaDataBarriers-1.png "MetaDataBarriers-1")][MetaDataBarriers]
