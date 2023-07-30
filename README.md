@@ -9,13 +9,13 @@
 
 ## Meta data
 
-[![](/assets/MetaDataBarriers-1.png "MetaDataBarriers-1")][MetaDataBarriers]
+![](/assets/MetaDataBarriers-1.png "MetaDataBarriers-1")
 
 ## Common-sense Knowledge
-[![](/assets/networkDiag.PNG "networkDiag")][networkDiag]
+![](/assets/networkDiag.PNG "networkDiag")
 
 ## Results
-[![](/assets/H-Algorithms.jpg "H-Algorithms")][H-Algorithm]
+![](/assets/H-Algorithms.jpg "H-Algorithms")
 
 ## Requirements
 
