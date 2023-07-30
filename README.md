@@ -5,7 +5,7 @@
 
 ## Approach
 
-[![](/assets/Headline-Methodology.drawio-1.png "Headline-Methodology.drawio-1")]
+![](/assets/Headline-Methodology.drawio-1.png "Headline-Methodology.drawio-1")
 
 ## Meta data
 
