@@ -6,10 +6,10 @@
 ## Main Experiments
 
 ***Approach*** 
-[![](/assets/Headline-Methodology.drawio.pdf "Headline-Methodology.drawio")][Headline-Methodology.drawio]
+[![](/assets/Headline-Methodology.drawio.png "Headline-Methodology.drawio")][Headline-Methodology.drawio]
 
 ***Meta data*** 
-[![](/assets/MetaDataBarriers.pdf "MetaDataBarriers")][MetaDataBarriers]
+[![](/assets/MetaDataBarriers.png "MetaDataBarriers")][MetaDataBarriers]
 
 ***Common-sense Knowledge*** 
 [![](/assets/networkDiag.PNG "networkDiag")][networkDiag]
