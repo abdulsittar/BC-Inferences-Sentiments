@@ -45,8 +45,6 @@ from sklearn.metrics import precision_score, recall_score, confusion_matrix, cla
 
 label_encoder = LabelEncoder()
 
-
-
 path = '/home/adbuls/Title-Data/'
 #path = '/home/adbuls/Final-labelled-data/'
 csv_files = glob.glob(os.path.join(path, "*.csv"))
@@ -59,18 +57,17 @@ for f in csv_files:
     modelname = ""
     inputname = ""
     data = pd.read_csv(f)
-    Features = data.filter(['title','body','cons','Label'], axis=1)
-    Features['body']= Features['body'].fillna("")
+    Features = data.filter(['title','allinferences','heads-senti','allinferences-senti','class','senti-str-headline'], axis=1)
     stop_words_l= stopwords.words('english')
-    Features['body'] .apply(lambda x: [item for item in x if item not in stop_words_l])
-    Features['body'] = Features['body'].map(lambda x: x.lower())
-    train = Features.filter(['body'], axis=1)
-    test  = Features.filter(['Label'], axis=1)
+    Features['title']= Features['title'].fillna("")
+    Features['senti-str-headline']= Features['senti-str-headline'].fillna("")
+    Features['allinferences']= Features['allinferences'].fillna("")
+    Features['class']= Features['class'].fillna("")
     x = Features['title'].values
-    y = Features['Label'].values
+    y = Features['class'].values
     #print(x)
-    classes = label_encoder.fit_transform(test)
-    x_train, x_test, y_train, y_test =  train_test_split(x, classes, test_size=0.2, random_state=42)
+    classes = label_encoder.fit_transform(y)
+    x_train, x_test, y_train, y_test =  train_test_split(x, classes, test_size=0.1, random_state=42)
     tokenizer = Tokenizer(num_words=10000)
     tokenizer.fit_on_texts(x)
     vocab_size=len(tokenizer.word_index)+1

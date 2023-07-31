@@ -65,20 +65,22 @@ for f in csv_files:
     Features['senti-str-headline']= Features['senti-str-headline'].fillna("")
     Features['allinferences']= Features['allinferences'].fillna("")
     Features['class']= Features['class'].fillna("")
+    train = Features.filter(['title'], axis=1)
+    test  = Features.filter(['Label'], axis=1)
     x = Features['title'].values
     y = Features['class'].values
     #print(x)
     classes = label_encoder.fit_transform(y)
-    x_train, x_test, y_train, y_test =  train_test_split(x, classes, test_size=0.2, random_state=42)
+    x_train, x_test, y_train, y_test =  train_test_split(x, classes, test_size=0.1, random_state=42)
     tokenizer = Tokenizer(num_words=10000)
-    texts = pd.concat([train_df["title"],  train_df["allinferences"]])
+    texts = pd.concat([train_df["title"], train_df["senti-str-headline"], train_df["allinferences"]])
     tokenizer.fit_on_texts(texts)
     vocab_size=len(tokenizer.word_index)+1
     xtrain= tokenizer.texts_to_sequences(x_train)
     xtest= tokenizer.texts_to_sequences(x_test) 
     maxlen=200
     xtrain=pad_sequences(xtrain,padding='post', maxlen=maxlen)
-    xtest =pad_sequences(xtest, padding='post', maxlen=maxlen)
+    xtest=pad_sequences(xtest,padding='post', maxlen=maxlen)
     embedding_dim=100
     #print(vocab_size)
     #print(classes)

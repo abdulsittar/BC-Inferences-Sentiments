@@ -36,9 +36,7 @@ label_encoder = LabelEncoder()
 
 
 
-
-path = '/home/adbuls/Title-Data/'
-#path = '/home/adbuls/sample/'
+path = '/home/adbuls/Final-labelled-data/'
 csv_files = glob.glob(os.path.join(path, "*.csv"))
 print(len(csv_files))
 print(len(csv_files))
@@ -53,35 +51,18 @@ for f in csv_files:
     modelname = ""
     inputname = ""
     data = pd.read_csv(f)
-    Features = data.filter(['title','body','cons','Label'], axis=1)
-    
-    #Features['title']= Features['title'].fillna(0)
-    #Features['body']= Features['body'].fillna(0)
-    Features['cons']= Features['cons'].fillna("")
-    Features['cons'] = Features.cons.apply(lambda x: (x.replace('-', ' ')).split("___"))
-    Features['cons'] = [' '.join(map(str, l)) for l in Features['cons']]
-    
+    Features = data.filter(['title','allinferences','heads-senti','allinferences-senti','class'], axis=1)
+    Features['heads-senti']= Features['heads-senti'].fillna(0)
+    Features['allinferences-senti']= Features['allinferences-senti'].fillna(0)
+    Features['allinferences']= Features['allinferences'].fillna("")
     Features['title']= Features['title'].fillna("")
-    Features['body']= Features['body'].fillna("")
     stop_words_l= stopwords.words('english')
-    
-    ##stop_words_l= stopwords.words('english')
-    #F#eatures['title']=Features.title.apply(lambda x: " ".join(re.sub(r'[^a-zA-Z]',' ',w).lower() for w in x.split(' ') if re.sub(r'[^a-zA-Z]',' ',w).lower() not in stop_words_l) 
-    #Features['body'] = Features.body.apply(lambda x: " ".join(re.sub(r'[^a-zA-Z]',' ',w).lower() for w in x.split(' ') if re.sub(r'[^a-zA-Z]',' ',w).lower() not in stop_words_l) 
-    
-    #Features['title'] = Features['title'].map(lambda x: x.lower())
-    #Features['body'] = Features['body'].map(lambda x: x.lower())
-    
-    #Features['title'] .apply(lambda x: [item for item in x if item not in stop_words_l])
-    #Features['body'] .apply(lambda x: [item for item in x if item not in stop_words_l])
-
-    
-    #Features['title'] = Features['title'].map(lambda x: x.lower())
-    #Features['body'] = Features['body'].map(lambda x: x.lower())
-    
-    train = Features.filter(['title','body','cons'], axis=1)
-    test  = Features.filter(['Label'], axis=1)
-    
+    Features['title'] .apply(lambda x: [item for item in x if item not in stop_words_l])
+    Features['title'] = Features['title'].map(lambda x: x.lower())
+    Features['allinferences'] .apply(lambda x: [item for item in x if item not in stop_words_l])
+    Features['allinferences'] = Features['allinferences'].map(lambda x: x.lower())
+    train = Features.filter(['title','allinferences','heads-senti','allinferences-senti'], axis=1)
+    test  = Features.filter(['class'], axis=1)
     classes = label_encoder.fit_transform(test)
     try:
         X_train, X_test, y_train, y_test = train_test_split(train, classes,test_size=0.2, shuffle = True, random_state = 8,stratify=classes)
@@ -89,14 +70,16 @@ for f in csv_files:
     
     
         get_title   = FunctionTransformer(lambda x: x['title'], validate=False)
-        get_body    = FunctionTransformer(lambda x: x['body'], validate=False)
-        get_cons    = FunctionTransformer(lambda x: x['cons'], validate=False)
+        get_allinferences    = FunctionTransformer(lambda x: x['allinferences'], validate=False)
+        allinferences_senti = FunctionTransformer(lambda x: x[['allinferences-senti']], validate=False)
+        heads_senti = FunctionTransformer(lambda x: x[['heads-senti']], validate=False)
 
+        titsent = Pipeline([('selector',heads_senti),('imputer', SimpleImputer())])
+        allsent = Pipeline([('selector',allinferences_senti),('imputer', SimpleImputer())])
         title  = Pipeline([('selector',get_title),('vectorizer', CountVectorizer())])
-        body  = Pipeline([('selector',get_body),('vectorizer', CountVectorizer())])
-        cons  = Pipeline([('selector',get_cons),('vectorizer', CountVectorizer())])
-        
-        for i in range(6):
+        allinferences  = Pipeline([('selector',get_allinferences),('vectorizer', CountVectorizer())])
+        for i in range(5):
+            i=6
             if i == 0:
                 union = FeatureUnion([('title',title)])
                 inputname = "Title"
@@ -131,8 +114,8 @@ for f in csv_files:
                     print(counter);
                 counter = counter + 1;
             elif i == 1:
-                union = FeatureUnion([('body',body)])
-                inputname = "Body"
+                union = FeatureUnion([('titsent',titsent),('title',title)])
+                inputname = "Title+Sentiment"
                 for j in range(5):
                     if j == 0:
                         pl = Pipeline([('union',union),('clf', LogisticRegression())])
@@ -164,8 +147,8 @@ for f in csv_files:
                     print(counter);
                     counter = counter + 1
             elif i == 2:
-                union = FeatureUnion([('cons',cons)])
-                inputname = "Cons"
+                union = FeatureUnion([('allinferences',allinferences)])
+                inputname = "Inferences"
                 for j in range(5):
                     if j == 0:
                         pl = Pipeline([('union',union),('clf', LogisticRegression())])
@@ -197,8 +180,8 @@ for f in csv_files:
                     print(counter);
                     counter = counter + 1  
             elif i == 3:
-                union = FeatureUnion([('title',title),('body',body)])
-                inputname = "Title+Body"
+                union = FeatureUnion([('allsent',allsent),('allinferences',allinferences)])
+                inputname = "Inferences+Sentiment"
                 for j in range(5):
                     if j == 0:
                         pl = Pipeline([('union',union),('clf', LogisticRegression())])
@@ -230,8 +213,8 @@ for f in csv_files:
                     print(counter);
                     counter = counter + 1
             elif i == 4:
-                union = FeatureUnion([('title',title),('cons',cons)])
-                inputname = "Title+Cons"
+                union = FeatureUnion([('title',title),('allinferences',allinferences)])
+                inputname = "Title+Inferences"
                 for j in range(5):
                     if j == 0:
                         pl = Pipeline([('union',union),('clf', LogisticRegression())])
@@ -263,8 +246,8 @@ for f in csv_files:
                     print(counter);
                     counter = counter + 1
             else:
-                union = FeatureUnion([('title',title),('body',body),('cons',cons)])
-                inputname = "Title+Body+Cons"
+                union = FeatureUnion([('title',title),('allinferences',allinferences),('allsent',allsent)])
+                inputname = "Title+Inferences+Sentiment"
                 for j in range(5):
                     if j == 0:
                         pl = Pipeline([('union',union),('clf', LogisticRegression())])
@@ -296,8 +279,7 @@ for f in csv_files:
                     print(counter);
                     counter = counter + 1
         i = i + 1
-        print(inputname)
         q.to_csv(filename)
     except:
         z=0
-o.to_csv("Barrier-Classification-Results-.csv")
+o.to_csv("Classification-Results.csv")
