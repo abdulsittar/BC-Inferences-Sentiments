@@ -34,8 +34,6 @@ from sklearn.metrics import precision_score, recall_score, confusion_matrix, cla
 
 label_encoder = LabelEncoder()
 
-
-
 path = '/home/adbuls/Final-labelled-data/'
 csv_files = glob.glob(os.path.join(path, "*.csv"))
 print(len(csv_files))
@@ -100,6 +98,7 @@ for f in csv_files:
                         pl = Pipeline([('union',union),('clf', SVC())])
                         modelname = "SVC"
                     pl.fit(X_train, y_train)
+                    cv_result = cross_validate(pl, X_train, y_train, cv=5)
                     prediction = pl.predict(X_test)
                     print(inputname)
                     print(modelname)
@@ -133,6 +132,7 @@ for f in csv_files:
                         pl = Pipeline([('union',union),('clf', SVC())])
                         modelname = "SVC"
                     pl.fit(X_train, y_train)
+                    cv_result = cross_validate(pl, X_train, y_train, cv=5)
                     prediction = pl.predict(X_test)
                     print(inputname)
                     print(modelname)
@@ -166,6 +166,7 @@ for f in csv_files:
                         pl = Pipeline([('union',union),('clf', SVC())])
                         modelname = "SVC"
                     pl.fit(X_train, y_train)
+                    cv_result = cross_validate(pl, X_train, y_train, cv=5)
                     prediction = pl.predict(X_test)
                     print(inputname)
                     print(modelname)
@@ -199,6 +200,7 @@ for f in csv_files:
                         pl = Pipeline([('union',union),('clf', SVC())])
                         modelname = "SVC"
                     pl.fit(X_train, y_train)
+                    cv_result = cross_validate(pl, X_train, y_train, cv=5)
                     prediction = pl.predict(X_test)
                     print(inputname)
                     print(modelname)
@@ -232,6 +234,7 @@ for f in csv_files:
                         pl = Pipeline([('union',union),('clf', SVC())])
                         modelname = "SVC"
                     pl.fit(X_train, y_train)
+                    cv_result = cross_validate(pl, X_train, y_train, cv=5)
                     prediction = pl.predict(X_test)
                     print(inputname)
                     print(modelname)
@@ -265,6 +268,7 @@ for f in csv_files:
                         pl = Pipeline([('union',union),('clf', SVC())])
                         modelname = "SVC"
                     pl.fit(X_train, y_train)
+                    cv_result = cross_validate(pl, X_train, y_train, cv=5)
                     prediction = pl.predict(X_test)
                     print(inputname)
                     print(modelname)

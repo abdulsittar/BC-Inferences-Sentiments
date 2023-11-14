@@ -67,7 +67,7 @@ for f in csv_files:
     y = Features['class'].values
     #print(x)
     classes = label_encoder.fit_transform(y)
-    x_train, x_test, y_train, y_test =  train_test_split(x, classes, test_size=0.1, random_state=42)
+    x_train, x_test, y_train, y_test =  train_test_split(x, classes, test_size=0.2, random_state=42)
     tokenizer = Tokenizer(num_words=10000)
     tokenizer.fit_on_texts(x)
     vocab_size=len(tokenizer.word_index)+1
