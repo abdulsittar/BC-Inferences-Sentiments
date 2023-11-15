@@ -160,9 +160,9 @@ for f in csv_files:
             labels2.append(row['class'])
         labe = label_encoder.fit_transform(test)
         print(wrap(sen_w_feats[1], 80))
-        batch_size = 16
+        batch_size = 64
         learning_rate = 1e-5
-        epochs = 3
+        epochs = 10
         max_len = 0
         for sent in sen_w_feats:
             input_ids = tokenizer.encode(str(sent), add_special_tokens=True)

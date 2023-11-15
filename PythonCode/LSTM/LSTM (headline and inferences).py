@@ -101,7 +101,7 @@ for f in csv_files:
         model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
     #model.summary()
-    model.fit(xtrain,y_train, epochs=20, batch_size=16, verbose=False)
+    model.fit(xtrain,y_train, epochs=10, batch_size=64, verbose=False)
     loss, acc = model.evaluate(xtrain, y_train, verbose=False)
     print("Training Accuracy: ", acc)
 
