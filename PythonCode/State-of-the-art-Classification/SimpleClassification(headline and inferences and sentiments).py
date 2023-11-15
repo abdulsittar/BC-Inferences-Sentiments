@@ -63,8 +63,8 @@ for f in csv_files:
     test  = Features.filter(['class'], axis=1)
     classes = label_encoder.fit_transform(test)
     try:
-        X_train, X_test, y_train, y_test = train_test_split(train, classes,test_size=0.2, shuffle = True, random_state = 8,stratify=classes)
-        X_train, X_val, y_train, y_val   = train_test_split(X_train, y_train, test_size=0.25, random_state= 8,stratify=y_train)
+        X_train, X_test, y_train, y_test = train_test_split(train, classes,test_size=0.2, shuffle = True, random_state=42,stratify=classes)
+        X_train, X_val, y_train, y_val   = train_test_split(X_train, y_train, test_size=0.25, random_state=42,stratify=y_train)
     
     
         get_title   = FunctionTransformer(lambda x: x['title'], validate=False)
